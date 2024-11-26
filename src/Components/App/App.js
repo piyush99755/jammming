@@ -10,6 +10,8 @@ function App() {
     { name: 'Morocco', artist: 'Pitbull', album: 'Party', id: 2 },
   ]);
 
+  const[playlistName, setPlaylistName] = useState('New Playlist');
+
   const[playlistTracks, setPlaylistTracks] = useState([
      {name: 'Example playlist track', artist:'unknown', album:'new', id:'3'},
      {name: 'Example playlist track1', artist:'unknown1', album:'new1', id:'4'},
@@ -27,11 +29,20 @@ function App() {
     [playlistTracks]
   );
 
+ //removing tracks from playlist
   const removeTrack = useCallback(
     (track) => {
      setPlaylistTracks(prevTracks => prevTracks.filter(currentTrack => currentTrack.id !== track.id));
     },
   []);
+  
+  //updating playlist name
+  const updatePlaylistName = useCallback(
+    (name) => {
+      setPlaylistName(name);
+
+    }, []
+  )
   
 
   return (
@@ -42,7 +53,12 @@ function App() {
       <div className="App">
         <SearchBar />
         <SearchResult searchResult={searchResult} onAdd = {addTrack}  />
-        <Playlist playListTracks = {playlistTracks} onRemove = {removeTrack}/>
+        <Playlist 
+        playListTracks = {playlistTracks} 
+        onRemove = {removeTrack} 
+        playlistName = {playlistName}
+        onNameChange = {updatePlaylistName}
+        />
       </div>
     </div>
   );
