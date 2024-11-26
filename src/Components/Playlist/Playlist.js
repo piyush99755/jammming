@@ -4,10 +4,14 @@ import Tracklist from '../Tracklist/Tracklist';
 
 
 
-function Playlist( {playListTracks}){
+function Playlist(props){
     return(
         <div className="Playlist">
-        <Tracklist tracks = {playListTracks} />
+        <Tracklist 
+        tracks = {props.playListTracks}
+        isRemoval = {true}
+        onRemove = {props.onRemove} 
+        />
         <button className="Playlist-save">
           SAVE TO SPOTIFY
         </button>

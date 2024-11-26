@@ -25,7 +25,13 @@ function App() {
     setPlaylistTracks(prevTracks => [...prevTracks, track]);
   },
     [playlistTracks]
-    );
+  );
+
+  const removeTrack = useCallback(
+    (track) => {
+     setPlaylistTracks(prevTracks => prevTracks.filter(currentTrack => currentTrack.id !== track.id));
+    },
+  []);
   
 
   return (
@@ -35,8 +41,8 @@ function App() {
       </h1>
       <div className="App">
         <SearchBar />
-        <SearchResult searchResult={searchResult} onAdd = {addTrack} />
-        <Playlist playListTracks = {playlistTracks} />
+        <SearchResult searchResult={searchResult} onAdd = {addTrack}  />
+        <Playlist playListTracks = {playlistTracks} onRemove = {removeTrack}/>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import "./Track.css";
 
 
 
-const Track = ({ track, onAdd, isRemoval }) => {
+const Track = ({ track, onAdd, onRemove, isRemoval }) => {
  
   const addTrack = useCallback(
     (event) => {
@@ -13,10 +13,17 @@ const Track = ({ track, onAdd, isRemoval }) => {
     [onAdd, track]
   );
 
+  const removeTrack = useCallback(
+    (event) => {
+      onRemove(track);
+    },
+    [onRemove, track]
+  )
+
   const renderAction = () => {
     if(isRemoval){
       return(
-        <button className = "Track-Action">-</button>
+        <button className = "Track-Action" onClick = {removeTrack}>-</button>
       );
     }
    
