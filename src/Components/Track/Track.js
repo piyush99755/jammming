@@ -1,34 +1,44 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import "./Track.css";
-import { Button } from 'bootstrap';
 
 
 
-function Track(){
-  
+
+const Track = ({ track, onAdd, isRemoval }) => {
+ 
+  const addTrack = useCallback(
+    (event) => {
+      onAdd(track); 
+    },
+    [onAdd, track]
+  );
+
   const renderAction = () => {
-    if(this.props.isRemoval){
+    if(isRemoval){
       return(
-        <button>-</button>
-      )
+        <button className = "Track-Action">-</button>
+      );
     }
-    else{
+   
       return(
-        <button>+</button>
+        <button className = "Track-Action" onClick = {addTrack}>+</button>
       )
-    }
-  
+    
+}
 
-  }
-    return(
+
+return(
             
       <div className="Track">
       <div className="Track-information">
+      <h3>{track.name}</h3>
+      <p>{track.artist} | {track.album}</p>
         
       </div>
+      {renderAction()}
       
       </div>
-);
+)
 
 };
 export default Track;
