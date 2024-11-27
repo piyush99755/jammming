@@ -42,7 +42,11 @@ function App() {
       setPlaylistName(name);
 
     }, []
-  )
+  );
+
+  /* const savePlaylist = useCallback(() => {
+   const trackUris = playlistTracks.map((track) => track.uri);
+  }) */
   
 
   return (
@@ -52,14 +56,16 @@ function App() {
       </h1>
       <div className="App">
         <SearchBar />
-        <SearchResult searchResult={searchResult} onAdd = {addTrack}  />
-        <Playlist 
-        playListTracks = {playlistTracks} 
-        onRemove = {removeTrack} 
-        playlistName = {playlistName}
-        onNameChange = {updatePlaylistName}
-        />
+          <div className="App-playlist">
+          <SearchResult searchResult={searchResult} onAdd = {addTrack}  />
+          <Playlist 
+          playListTracks = {playlistTracks} 
+          onRemove = {removeTrack} 
+          playlistName = {playlistName}
+          onNameChange = {updatePlaylistName}
+          />
       </div>
+    </div>
     </div>
   );
 }
