@@ -67,7 +67,7 @@ async savePlaylist(name, trackUris) {
         if(!userResponse.ok){
             throw new Error('Failed to fetch user information');
         }
-        const userData = await userResponse.json();
+        //const userData = await userResponse.json();
 
         //create playlist
         const playlistResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
