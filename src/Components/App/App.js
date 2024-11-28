@@ -3,20 +3,19 @@ import SearchBar from '../SearchBar/SearchBar'; // Assuming you have this compon
 import SearchResult from '../SearchResults/SearchResult'; // Assuming you have this component
 import './App.css';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../utils/Spotify';
 
 function App() {
-  const [searchResult, setSearchResult] = useState([
-    { name: 'Addicted', artist: 'Enrique', album: 'Babe', id: 1 },
-    { name: 'Morocco', artist: 'Pitbull', album: 'Party', id: 2 },
-  ]);
+  const [searchResult, setSearchResult] = useState([]);
 
   const[playlistName, setPlaylistName] = useState('New Playlist');
 
-  const[playlistTracks, setPlaylistTracks] = useState([
-     {name: 'Example playlist track', artist:'unknown', album:'new', id:'3'},
-     {name: 'Example playlist track1', artist:'unknown1', album:'new1', id:'4'},
-  ]);
+  const[playlistTracks, setPlaylistTracks] = useState([]);
   
+  //function to search tracks..
+  const search = useCallback((term) => {
+    Spotify.search(term).then(setSearchResult);
+  }, []);
 
   //function to add tracks...
   const addTrack = useCallback((track) => {
@@ -44,9 +43,13 @@ function App() {
     }, []
   );
 
-  /* const savePlaylist = useCallback(() => {
+  const savePlaylist = useCallback(() => {
    const trackUris = playlistTracks.map((track) => track.uri);
-  }) */
+   Spotify.savePlaylist(playlistName, trackUris).then(() => {
+    setPlaylistName('New Playlist');
+    setPlaylistTracks([]);
+   });
+   },[playlistName, playlistTracks]);
   
 
   return (
@@ -55,7 +58,7 @@ function App() {
         Ja<span className="highlight">mmm</span>ing
       </h1>
       <div className="App">
-        <SearchBar />
+        <SearchBar onSearch = {search} />
           <div className="App-playlist">
           <SearchResult searchResult={searchResult} onAdd = {addTrack}  />
           <Playlist 
@@ -63,6 +66,7 @@ function App() {
           onRemove = {removeTrack} 
           playlistName = {playlistName}
           onNameChange = {updatePlaylistName}
+          onSave = {savePlaylist}
           />
       </div>
     </div>
